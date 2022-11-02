@@ -1,5 +1,54 @@
 /* Your Code Here */
 
+function createEmployeeRecord(array) {
+    return {
+        firstName: array[0],
+        familyName: array[1],
+        title: array[2],
+        payPerHour: array[3],
+        timeInEvents: [],
+        timeOutEvents: [],
+    }
+}
+
+function createEmployeeRecords(arrayOfArrays) {
+    return arrayOfArrays.map(array => createEmployeeRecord(array))
+}
+
+function createTimeInEvent(dateStamp) {
+    const [date,hour] = (dateStamp.split(' '))
+    this.timeInEvents.push({
+        type: 'TimeIn',
+        hour: parseInt(hour, 10),
+        date: date,
+    })
+    return this
+}
+
+function createTimeOutEvent(dateStamp) {
+    const [date,hour] = (dateStamp.split(' '))
+    this.timeOutEvents.push({
+        type: 'TimeOut',
+        hour: parseInt(hour, 10),
+        date: date,
+    })
+    return this
+}
+
+function hoursWorkedOnDate(date) {
+    const timeInEvent = this.timeInEvents.find((TimeIn) => {return TimeIn.date === date})
+    const timeOutEvent = this.timeOutEvents.find((TimeIn) => {return TimeIn.date === date})
+    const hoursWorked = (timeOutEvent.hour - timeInEvent.hour) / 100
+    return hoursWorked
+    
+}
+
+function wagesEarnedOnDate(date) {
+    
+    const payOwed = this.payPerHour * hoursWorkedOnDate.call(this,date)
+        return parseFloat(payOwed.toString())
+}
+
 /*
  We're giving you this function. Take a look at it, you might see some usage
  that's new and different. That's because we're avoiding a well-known, but
@@ -21,3 +70,14 @@ const allWagesFor = function () {
     return payable
 }
 
+function findEmployeeByFirstName(srcArray,firstName) {
+    const search = srcArray[0].firstName
+    const result = srcArray.find(firstName => search)
+        return result
+}
+
+function calculatePayroll(employeeRecords) {
+    return employeeRecords.reduce(function(a,b) {
+        return a + allWagesFor.call(b)
+    },0)
+}
